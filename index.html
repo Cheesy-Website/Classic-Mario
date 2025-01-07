@@ -17,10 +17,41 @@
             document.querySelector("link[rel='icon']").href = "https://i.ibb.co/NY8yC9c/download-1.png";
         }, 3500);
     </script>
-    <script>
-        window.onbeforeunload = function() {
-            return "Are you sure you want to leave?";
+        <script>
+        window.onload = function() {
+            const warningEnabled = getCookie("warningEnabled") === "true";
+            document.getElementById("warntoggle").checked = warningEnabled;
+
+            if (warningEnabled) {
+                window.onbeforeunload = function() {
+                    return "Are you sure you want to leave?";
+                };
+            }
+
+            document.getElementById("warntoggle").addEventListener("change", function() {
+                if (this.checked) {
+                    setCookie("warningEnabled", "true", 7);
+                    window.onbeforeunload = function() {
+                        return "Are you sure you want to leave?";
+                    };
+                } else {
+                    setCookie("warningEnabled", "false", 7);
+                    window.onbeforeunload = null;
+                }
+            });
         };
+
+        function setCookie(name, value, days) {
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+        }
+
+        function getCookie(name) {
+            return document.cookie.split('; ').reduce((r, v) => {
+                const parts = v.split('=');
+                return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+            }, '');
+        }
     </script>
 </head>
 
