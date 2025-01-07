@@ -20,24 +20,12 @@
         <script>
         window.onload = function() {
             const warningEnabled = getCookie("warningEnabled") === "true";
-            document.getElementById("warntoggle").checked = warningEnabled;
 
             if (warningEnabled) {
                 window.onbeforeunload = function() {
                     return "Are you sure you want to leave?";
                 };
             }
-
-            document.getElementById("warntoggle").addEventListener("change", function() {
-                if (this.checked) {
-                    setCookie("warningEnabled", "true", 7);
-                    window.onbeforeunload = function() {
-                        return "Are you sure you want to leave?";
-                    };
-                } else {
-                    setCookie("warningEnabled", "false", 7);
-                    window.onbeforeunload = null;
-                }
             });
         };
 
