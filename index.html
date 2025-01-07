@@ -17,15 +17,28 @@
             document.querySelector("link[rel='icon']").href = "https://i.ibb.co/NY8yC9c/download-1.png";
         }, 3500);
     </script>
-        <script>
+            <script>
         window.onload = function() {
             const warningEnabled = getCookie("warningEnabled") === "true";
+            document.getElementById("warntoggle").checked = warningEnabled;
 
             if (warningEnabled) {
                 window.onbeforeunload = function() {
                     return "Are you sure you want to leave?";
                 };
             }
+
+            document.getElementById("warntoggle").addEventListener("change", function() {
+                if (this.checked) {
+                    setCookie("warningEnabled", "true", 7);
+                    window.onbeforeunload = function() {
+                        return "Are you sure you want to leave?";
+                    };
+                } else {
+                    setCookie("warningEnabled", "true", 7);
+                    window.onbeforeunload = function() {
+                        return "Are you sure you want to leave?";
+                }
             });
         };
 
